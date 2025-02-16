@@ -10,7 +10,7 @@ setup.py – A script for packaging project. It allows you to install your proje
 Directories
 docs/ – Contains project documentation.
     design.md – Your project design document, detailing architecture, components, and technical decisions.
-src/ – Holds all source code for project.
+src/ – Holds all source code for the project.
     main.py – The entry point of program, where the DungeonVerse game starts.
     dm_engine/ – Contains the core logic of the AI Dungeon Master.
         story_generation.py – Handles story and quest generation.
