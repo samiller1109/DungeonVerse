@@ -1,3 +1,149 @@
-samiller1109
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DungeonVerse - AI-Powered RPG Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-It worked!!!
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .temp-logo {
+            font-family: 'Georgia', serif;
+            font-size: 2.2rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border: 2px solid #FFD700;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+
+        .main-header {
+            padding: 1.5rem 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            max-width: 800px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+      
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            background: #FFD700;
+            color: #1a1a1a;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: #E6C300;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 215, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .temp-logo {
+                font-size: 1.8rem;
+                padding: 0.4rem 1.2rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="temp-logo">DungeonVerse</div>
+    </header>
+
+    <main class="hero-section">
+        <h1 class="hero-title">Forge Your Legendary RPG Adventures</h1>
+        <p class="hero-description">
+            DungeonVerse revolutionizes tabletop gaming with AI-powered worldbuilding. 
+            Craft immersive campaigns using our intelligent tools, then experience them 
+            come alive through our dynamic AI Game Master. Create unique worlds, 
+            automate game tracking, and embark on multiplayer adventures 
+            that evolve with every decision.
+        </p>
+        <button class="cta-button">Begin Adventure</button>
+    </main>
+
+    <script>
+        
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            window.location.href = '/start-adventure';
+        });
+
+        
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.background = `
+                radial-gradient(
+                    at ${x * 100}% ${y * 100}%,
+                    #2d2d2d 0%,
+                    #1a1a1a 50%,
+                    #0d0d0d 100%
+                )
+            `;
+        });
+    </script>
+</body>
+</html>
