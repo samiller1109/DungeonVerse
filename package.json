@@ -1,1 +1,25 @@
 
+HEAD
+
+{
+  "name": "dungeonverse",
+  "version": "1.0.0",
+  "description": "AI Dungeon Master project for DnD",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "AI",
+    "Dungeon",
+    "Master",
+    "RPG"
+  ],
+  "author": "Sarah Miller",
+  "license": "ISC"
+}
+0e8a9ca (Commit package-lock.json and package.json)
