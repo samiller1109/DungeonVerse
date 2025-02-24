@@ -1,1 +1,29 @@
-
+{
+  "TableName": "GameSessions",
+  "KeySchema": [
+    { "AttributeName": "SessionID", "KeyType": "HASH" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "SessionID", "AttributeType": "S" },
+    { "AttributeName": "PlayerID", "AttributeType": "S" },
+    { "AttributeName": "SessionName", "AttributeType": "S" },
+    { "AttributeName": "CurrentState", "AttributeType": "M" },
+    { "AttributeName": "Active", "AttributeType": "BOOL" },
+    { "AttributeName": "CreatedAt", "AttributeType": "S" },
+    { "AttributeName": "UpdatedAt", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST",
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "PlayerIDIndex",
+      "KeySchema": [
+        { "AttributeName": "PlayerID", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  }
+}
