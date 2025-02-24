@@ -1,1 +1,30 @@
+{
+  "TableName": "Player_Sessions",
+  "KeySchema": [
+    { "AttributeName": "ID", "KeyType": "HASH" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "ID", "AttributeType": "S" },
+    { "AttributeName": "PlayerID", "AttributeType": "S" },
+    { "AttributeName": "SessionID", "AttributeType": "S" },
+    { "AttributeName": "LastActive", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST",
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "PlayerIDIndex",
+      "KeySchema": [
+        { "AttributeName": "PlayerID", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    },
+    {
+      "IndexName": "SessionIDIndex",
+      "KeySchema": [
+        { "AttributeName": "SessionID", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    }
+  ]
+}
 
