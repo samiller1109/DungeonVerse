@@ -1,1 +1,30 @@
+{
+  "TableName": "Quests",
+  "KeySchema": [
+    { "AttributeName": "QuestID", "KeyType": "HASH" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "QuestID", "AttributeType": "S" },
+    { "AttributeName": "AssociatedSession", "AttributeType": "S" },
+    { "AttributeName": "Name", "AttributeType": "S" },
+    { "AttributeName": "Status", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST",
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "SessionIndex",
+      "KeySchema": [
+        { "AttributeName": "AssociatedSession", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    },
+    {
+      "IndexName": "StatusIndex",
+      "KeySchema": [
+        { "AttributeName": "Status", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    }
+  ]
+}
 
