@@ -1,1 +1,19 @@
-
+{
+  "TableName": "Players",
+  "KeySchema": [
+    { "AttributeName": "PlayerID", "KeyType": "HASH" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "PlayerID", "AttributeType": "S" },
+    { "AttributeName": "Username", "AttributeType": "S" },
+    { "AttributeName": "CharacterName", "AttributeType": "S" },
+    { "AttributeName": "CharacterClass", "AttributeType": "S" },
+    { "AttributeName": "Level", "AttributeType": "N" },
+    { "AttributeName": "Experience", "AttributeType": "N" },
+    { "AttributeName": "HealthPoints", "AttributeType": "N" },
+    { "AttributeName": "Inventory", "AttributeType": "M" },
+    { "AttributeName": "CreatedAt", "AttributeType": "S" },
+    { "AttributeName": "UpdatedAt", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST"
+}
