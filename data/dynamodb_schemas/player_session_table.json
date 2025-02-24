@@ -6,8 +6,7 @@
   "AttributeDefinitions": [
     { "AttributeName": "ID", "AttributeType": "S" },
     { "AttributeName": "PlayerID", "AttributeType": "S" },
-    { "AttributeName": "SessionID", "AttributeType": "S" },
-    { "AttributeName": "LastActive", "AttributeType": "S" }
+    { "AttributeName": "SessionID", "AttributeType": "S" }
   ],
   "BillingMode": "PAY_PER_REQUEST",
   "GlobalSecondaryIndexes": [
@@ -27,4 +26,3 @@
     }
   ]
 }
-
