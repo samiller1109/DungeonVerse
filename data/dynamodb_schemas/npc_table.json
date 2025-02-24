@@ -1,1 +1,39 @@
+{
+  "TableName": "NPCs",
+  "KeySchema": [
+    { "AttributeName": "NPCID", "KeyType": "HASH" },
+    { "AttributeName": "SessionID", "KeyType": "RANGE" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "NPCID", "AttributeType": "S" },
+    { "AttributeName": "SessionID", "AttributeType": "S" },
+    { "AttributeName": "Name", "AttributeType": "S" },
+    { "AttributeName": "Location", "AttributeType": "S" },
+    { "AttributeName": "DialogueState", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST",
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "NameIndex",
+      "KeySchema": [
+        { "AttributeName": "Name", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    },
+    {
+      "IndexName": "LocationIndex",
+      "KeySchema": [
+        { "AttributeName": "Location", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    },
+    {
+      "IndexName": "DialogueStateIndex",
+      "KeySchema": [
+        { "AttributeName": "DialogueState", "KeyType": "HASH" }
+      ],
+      "Projection": { "ProjectionType": "ALL" }
+    }
+  ]
+}
 
