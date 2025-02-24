@@ -8,6 +8,7 @@
     { "AttributeName": "NPCID", "AttributeType": "S" },
     { "AttributeName": "SessionID", "AttributeType": "S" },
     { "AttributeName": "Name", "AttributeType": "S" },
+    { "AttributeName": "Attributes", "AttributeType": "M" },
     { "AttributeName": "Location", "AttributeType": "S" },
     { "AttributeName": "DialogueState", "AttributeType": "S" }
   ],
