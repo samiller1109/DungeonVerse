@@ -1,16 +1,12 @@
 {
-    "TableName": "Logs",
-    "KeySchema": [
-        { "AttributeName": "SessionID", "KeyType": "HASH" },
-        { "AttributeName": "CreatedAt", "KeyType": "RANGE" }
-    ],
-    "AttributeDefinitions": [
-        { "AttributeName": "LogID", "AttributeType": "S" },
-        { "AttributeName": "SessionID", "AttributeType": "S" },
-        { "AttributeName": "PlayerID", "AttributeType": "S" },
-        { "AttributeName": "Message", "AttributeType": "S" },
-        { "AttributeName": "CreatedAt", "AttributeType": "S" }
-    ],
-    "BillingMode": "PAY_PER_REQUEST"
+  "TableName": "Logs",
+  "KeySchema": [
+    { "AttributeName": "SessionID", "KeyType": "HASH" },
+    { "AttributeName": "CreatedAt", "KeyType": "RANGE" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "SessionID", "AttributeType": "S" },
+    { "AttributeName": "CreatedAt", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST"
 }
-
