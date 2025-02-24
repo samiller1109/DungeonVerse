@@ -8,6 +8,8 @@
     { "AttributeName": "AssociatedSession", "AttributeType": "S" },
     { "AttributeName": "Name", "AttributeType": "S" },
     { "AttributeName": "Status", "AttributeType": "S" }
+    { "AttributeName": "Description", "AttributeType": "S" }
+    { "AttributeName": "Rewards", "AttributeType": "M" }
   ],
   "BillingMode": "PAY_PER_REQUEST",
   "GlobalSecondaryIndexes": [
