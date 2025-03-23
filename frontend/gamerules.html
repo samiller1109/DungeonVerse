@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DungeonVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+    --bg-dark: #000000;
+    --card-bg: rgba(30, 30, 30, 0.7);
+    --primary-orange: #FF6B1A;
+    --text-primary: #ffffff;
+    --text-secondary: #B8B8B8;
+    --glow-orange: rgba(255, 107, 26, 0.4);
+    --card-border: rgba(255, 107, 26, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background styles */
+.hero-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    background-image: url('assets/images/background2.jpg');
+    background-size: cover;
+    background-position: center;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0));
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,0.3) 0%,
+        rgba(0,0,0,0.6) 50%,
+        var(--bg-dark) 100%);
+    z-index: 1;
+}
+
+/* Layout */
+.app-container {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+}
+
+/* Sidebar styles */
+.sidebar {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    border-right: 1px solid rgba(255, 107, 26, 0.1);
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 2rem;
+}
+
+.logo a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo a:hover {
+    transform: scale(1.1);
+}
+
+.nav-item {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: rgba(255, 107, 26, 0.1);
+    color: var(--primary-orange);
+    box-shadow: 0 0 20px rgba(255, 107, 26, 0.2);
+}
+
+/* Main content */
+.main-content {
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    margin-top: -5vh;
+}
+
+.profile-icon {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+}
+
+.profile-icon:hover {
+    background: var(--primary-orange);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Title and description */
+.game-title {
+    font-size: 4.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-orange);
+    text-shadow: 
+        0 0 10px rgba(255, 107, 26, 0.5),
+        0 0 20px rgba(255, 107, 26, 0.3);
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 107, 26, 0.5),
+                     0 0 20px rgba(255, 107, 26, 0.3);
+    }
+    to {
+        text-shadow: 0 0 15px rgba(255, 107, 26, 0.7),
+                     0 0 30px rgba(255, 107, 26, 0.5),
+                     0 0 45px rgba(255, 107, 26, 0.3);
+    }
+}
+.game-rules {
+    font-size: 3.0rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-orange);
+    text-shadow: 
+        0 0 10px rgba(255, 107, 26, 0.5),
+        0 0 20px rgba(255, 107, 26, 0.3);
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 107, 26, 0.5),
+                     0 0 20px rgba(255, 107, 26, 0.3);
+    }
+    to {
+        text-shadow: 0 0 15px rgba(255, 107, 26, 0.7),
+                     0 0 30px rgba(255, 107, 26, 0.5),
+                     0 0 45px rgba(255, 107, 26, 0.3);
+    }
+}
+
+
+.game-description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Start button */
+.start-btn {
+    background: linear-gradient(45deg, #FF6B1A, #FF8C44);
+    color: white;
+    border: none;
+    padding: 1.2rem 3.5rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto 4rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(255, 107, 26, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.start-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite;
+}
+
+@keyframes buttonShine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 10px 20px rgba(255, 107, 26, 0.3),
+        0 0 30px rgba(255, 107, 26, 0.3);
+}
+
+/* Popup Modal Styles */
+.popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+.popup-content {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 80%;
+            max-width: 600px;
+            color: var(--text-primary);
+            box-shadow: 0 0 30px rgba(255, 107, 26, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+.popup-content h3 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+.popup-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+/* Feature Cards Styles */
+.features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+.feature-card {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+.feature-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3),
+                        0 0 30px rgba(255, 107, 26, 0.2);
+        }
+
+.feature-card h3 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+.feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+/* Hidden Checkbox Trick for Popup */
+.popup-checkbox {
+            display: none;
+        }
+
+.popup-checkbox:checked ~ .popup-container {
+            display: flex;
+        }
+/* Close Button */
+.close-popup {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--primary-orange);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+.close-popup:hover {
+            color: white;
+        }
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.footer a {
+    color: var(--primary-orange);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #FF8C44;
+}
+
+/* Auth Modal */
+.auth-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+.auth-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(0, 0, 0,0.95);
+    padding: 3rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 2px solid var(--primary-orange);
+    box-shadow: 0 0 30px rgba(255, 107, 26, 0.2),
+                inset 0 0 20px rgba(255, 107, 26, 0.1);
+    animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.auth-modal-content h2 {
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.auth-modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.auth-btn {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-btn {
+    background: linear-gradient(45deg, #FF6B1A, #FF8C44);
+    color: white;
+}
+
+.signup-btn {
+    background: rgba(255, 107, 26, 0.1);
+    color: var(--primary-orange);
+    border: 1px solid var(--primary-orange);
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 26, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        padding: 1rem;
+        justify-content: center;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+
+    .game-title {
+        font-size: 3rem;
+    }
+
+    .game-rules {
+        font-size: 3rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 0;
+    }
+
+    .nav-item {
+        width: 38px;
+        height: 38px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+    
+    <div class="app-container">
+        <div id="authModal" class="auth-modal">
+            <div class="auth-modal-content">
+                <h2>Welcome Adventurer!</h2>
+                <p>Begin your journey by signing in or creating a new account</p>
+                <div class="auth-buttons">
+                    <button onclick="window.location.href='login.html'" class="auth-btn login-btn">Login</button>
+                    <button onclick="window.location.href='signup.html'" class="auth-btn signup-btn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <a herf="/">
+                <img src="assets/images/dragon-logo2.png" alt="DungeonVerse Logo">
+                </a>
+            </div>
+            <a href="#" class="nav-item active">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-book"></i>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-users"></i>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-cog"></i>
+            </a>
+        </div>
+
+        <div class="main-content">
+            <div class="profile-icon">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="content-wrapper">
+                <h1 class="game-title">DungeonVerse</h1>
+                <!-- <p class="game-description"></p> -->
+                <!-- <button class="start-btn" onclick="showAuthModal()">Start Adventure</button> -->
+                <h1 class="game-rules">Game Rules</h1>
+           
+                <div class="features-grid">
+                <!-- Feature Card 1 -->
+                <label for="popup-1" class="feature-card">
+                    <h3>Rule 1: Choose Your Class</h3>
+                    <p>Select a character class (Warrior, Mage, Rogue, etc.) to begin your adventure. Each class has unique abilities and stats.</p>
+                </label>
+                <input type="checkbox" id="popup-1" class="popup-checkbox" />
+                <div class="popup-container">
+                    <div class="popup-content">
+                        <h3>Rule 1: Choose Your Class</h3>
+                        <p>Select a qcharacter class (Warrior, Mage, Rogue, etc.) to begin your adventure. Each class has unique abilities and stats.</p>
+                        <label for="popup-1" class="close-popup">&times;</label>
+                    </div>
+                </div>
+
+                <!-- Feature Card 2 -->
+                <label for="popup-2" class="feature-card">
+                    <h3>Rule 2: Explore the Dungeon</h3>
+                    <p>Navigate through mysterious dungeons, uncover hidden treasures, and avoid deadly traps.</p>
+                </label>
+                <input type="checkbox" id="popup-2" class="popup-checkbox" />
+                <div class="popup-container">
+                    <div class="popup-content">
+                        <h3>Rule 2: Explore the Dungeon</h3>
+                        <p>Navigate through mysterious dungeons, uncover hidden treasures, and avoid deadly traps.</p>
+                        <label for="popup-2" class="close-popup">&times;</label>
+                    </div>
+                </div>
+
+                <!-- Feature Card 3 -->
+                <label for="popup-3" class="feature-card">
+                    <h3>Rule 3: Turn-Based Combat</h3>
+                    <p>Engage in strategic turn-based battles. Choose your attacks, defend wisely, and use your powers tactically.</p>
+                </label>
+                <input type="checkbox" id="popup-3" class="popup-checkbox" />
+                <div class="popup-container">
+                    <div class="popup-content">
+                        <h3>Rule 3: Turn-Based Combat</h3>
+                        <p>In <strong>DungeonVerse</strong>, combat is turn-based, meaning you and your enemies take turns acting in battle. Strategic decisions and the use of the right skills at the right time are key to victory. Every move counts, so plan your actions carefully!</p>
+
+        <h4>Combat Basics:</h4>
+        <ul>
+            <li><strong>Attack:</strong> Choose your primary offensive action, whether it's a basic melee strike, a ranged attack, or a magical spell. Each character class has its own attack options and damage output.</li>
+            <li><strong>Defend:</strong> Sometimes the best way to survive is to defend. Use defensive abilities to reduce incoming damage or avoid status effects like poison or paralysis.</li>
+            <li><strong>Abilities:</strong> Every character has unique abilities that can turn the tide of battle. These could include powerful area-of-effect spells, buffs to your stats, debuffs to enemies, healing, or even crowd control tactics like stunning or freezing foes.</li>
+            <li><strong>Items:</strong> Use consumables such as health potions, mana potions, or special items to heal, buff, or deal damage to enemies. Items can be a game-changer during tough battles.</li>
+        </ul>
+
+        <h4>Strategic Tips:</h4>
+        <ul>
+            <li><strong>Use the environment:</strong> Some battles may offer environmental factors such as terrain advantages or hazards that can be used to your benefit.</li>
+            <li><strong>Know your enemy:</strong> Each enemy type has strengths and weaknesses. For example, some enemies might be weak to fire, while others are resistant to physical attacks. Use this knowledge to plan your attacks accordingly.</li>
+            <li><strong>Take turns carefully:</strong> Plan your attacks and defense based on your turn order. Knowing when to attack, heal, or defend can be the difference between victory and defeat.</li>
+            <li><strong>Team synergy:</strong> If you're playing with a team, coordinate your moves to create powerful combos. For example, a warrior may use a taunt to keep enemies occupied while a mage deals damage from a distance.</li>
+        </ul>
+
+        <h4>Turn Order:</h4>
+        <p>The order of turns in combat is determined by your character's speed or initiative. Characters with higher speed usually take their turns before slower characters, so it's important to act quickly if you're in a time-sensitive situation. Some abilities may also alter the turn order, allowing you to get additional turns or delay enemy actions.</p>
+                        <label for="popup-3" class="close-popup">&times;</label>
+                    </div>
+                </div>
+                </div>
+                
+            </div>
+
+            <footer class="footer">
+                <p>We are not affiliated with Dungeons & Dragons in any way.</p>
+                <p style="margin-top: 1rem">© 2025 DungeonVerse | 
+                <a href="/privacy">Privacy Policy</a> | 
+                <a href="/terms">Terms of Service</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        function showAuthModal() {
+    const modal = document.getElementById('authModal');
+    modal.style.display = 'block';
+
+    // 点击模态框外部关闭
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // ESC 键关闭模态框
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            modal.style.display = 'none';
+        }
+    });
+}
+    </script>
+</body>
+</html>
