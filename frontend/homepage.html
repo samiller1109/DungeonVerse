@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DungeonVerse - Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0d12;
+            --card-bg: rgba(30, 30, 30, 0.7);
+            --primary-orange: #FF6B1A;
+            --primary-gold: #c89b5f;
+            --text-primary: #ffffff;
+            --text-secondary: #B8B8B8;
+            --glow-orange: rgba(255, 107, 26, 0.4);
+            --card-border: rgba(255, 107, 26, 0.2);
+            --sidebar-bg: #000000;
+            --sidebar-active: #080f1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background styles */
+        .hero-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70vh;
+            background-image: url('assets/images/background2.jpg');
+            background-size: cover;
+            background-position: center;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0));
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70vh;
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.3) 0%,
+                rgba(0,0,0,0.6) 50%,
+                var(--bg-dark) 100%);
+            z-index: 1;
+        }
+
+        /* Layout */
+        .app-container {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            background: var(--sidebar-bg);
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            height: 118vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            width: 100%;
+            max-width: 150px;
+        }
+
+        .create-button {
+            margin: 1rem 1.5rem 2rem;
+        }
+        
+        .create-btn {
+            background: linear-gradient(45deg, #FF6B1A, #FF8C44);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 107, 26, 0.3);
+        }
+
+        .create-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--primary-orange);
+            color: var(--primary-orange);
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 26, 0.3);
+        }
+
+        .nav-section {
+            padding: 0 1.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 107, 26, 0.1);
+            color: var(--primary-orange);
+            box-shadow: 0 0 20px rgba(255, 107, 26, 0.2);
+        }
+
+        .nav-item i {
+            width: 20px;
+        }
+
+        .bottom-nav {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #2c3341;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .username {
+            font-size: 0.9rem;
+        }
+
+        .sub-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Main content */
+        .main-content {
+            padding: 2rem 3rem;
+            overflow-y: auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            color: var(--primary-orange);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(255, 107, 26, 0.3);
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .carousel-control {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-control:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Worlds Grid */
+        .worlds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .world-card {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .world-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3),
+                        0 0 30px rgba(255, 107, 26, 0.2);
+        }
+
+        .world-card.featured {
+            border: 1px solid var(--primary-orange);
+        }
+
+        .card-image {
+            height: 160px;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+
+        .card-category {
+            display: inline-block;
+            background: #373d4a;
+            color: var(--text-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-category.fantasy {
+            background: #4c3a80;
+        }
+
+        .card-category.western {
+            background: #7d4e1e;
+        }
+
+        .card-category.steampunk {
+            background: #5e3517;
+        }
+
+        .card-category.high-fantasy {
+            background: #145a32;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--primary-orange);
+        }
+
+        .card-creator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .creator-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #000;
+        }
+
+        .creator-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .time-ago {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .card-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .action-btn {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(45deg, #FF6B1A, #FF8C44);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            opacity: 0.9;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-orange);
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Create New Buttons */
+        .create-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Profile Icon */
+        .profile-icon {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .profile-icon:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                flex-direction: row;
+                padding: 1rem;
+                justify-content: center;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                height: auto;
+            }
+
+            .logo, .create-button, .bottom-nav, .user-profile {
+                display: none;
+            }
+
+            .nav-section {
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-item {
+                padding: 0.5rem;
+                flex-direction: column;
+                gap: 0.25rem;
+                text-align: center;
+            }
+
+            .nav-item i {
+                font-size: 1.25rem;
+            }
+
+            .nav-item span {
+                font-size: 0.7rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+                padding-bottom: 5rem;
+            }
+
+            .worlds-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .create-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+    
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="assets/images/dragon-logo2.png" alt="DungeonVerse Logo">
+            </div>
+
+            <div class="create-button">
+                <button class="create-btn">
+                    <i class="fas fa-plus"></i> Create
+                </button>
+            </div>
+
+            <div class="nav-section">
+                <a href="index.html" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="discover.html" class="nav-item">
+                    <i class="fas fa-compass"></i>
+                    <span>Discover</span>
+                </a>
+                <a href="campaigns.html" class="nav-item">
+                    <i class="fas fa-book"></i>
+                    <span>Campaigns</span>
+                </a>
+                <a href="groups.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Groups</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+
+            <div class="nav-section bottom-nav">
+                <a href="claim.html" class="nav-item">
+                    <i class="fas fa-coins"></i>
+                    <span>Claim Credits</span>
+                </a>
+                <a href="feedback.html" class="nav-item">
+                    <i class="fas fa-comment-alt"></i>
+                    <span>Feedback</span>
+                </a>
+                <a href="help.html" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </a>
+                <a href="updates.html" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Updates</span>
+                </a>
+                <a href="discord.html" class="nav-item">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+                
+                <div class="user-profile">
+                    <div class="avatar">U</div>
+                    <div>
+                        <div class="username">Username</div>
+                        <div class="sub-label">Free</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="profile-icon">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <!-- Recent Worlds Section -->
+            <section class="campaigns-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Worlds</h2>
+                    <div class="carousel-controls">
+                        <div class="carousel-control">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="carousel-control">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="worlds-grid">
+                    <div class="world-card">
+                        <div class="card-image" style="background-image: url('assets/images/lost-kingdom.jpg')">
+                            <div class="card-overlay">
+                                <div class="card-category fantasy">Fantasy</div>
+                                <h3 class="card-title">The Lost Kingdom</h3>
+                                <div class="time-ago">Last played: 2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-play"></i> Continue
+                            </button>
+                        </div>
+                    </div>
+                    <div class="world-card">
+                        <div class="card-image" style="background-image: url('assets/images/dragons-lair.jpg')">
+                            <div class="card-overlay">
+                                <div class="card-category fantasy">Fantasy</div>
+                                <h3 class="card-title">Dragon's Lair</h3>
+                                <div class="time-ago">Last played: Yesterday</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-play"></i> Continue
+                            </button>
+                        </div>
+                    </div>
+                    <div class="world-card">
+                        <div class="card-image" style="background-image: url('assets/images/mystic-forest.jpg')">
+                            <div class="card-overlay">
+                                <div class="card-category fantasy">Fantasy</div>
+                                <h3 class="card-title">Mystic Forest</h3>
+                                <div class="time-ago">Last played: 3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn primary">
+                                <i class="fas fa-play"></i> Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pre-made Worlds Section -->
+                <div class="section-header">
+                    <h2 class="section-title">Pre-made Worlds</h2>
+                    <div class="carousel-controls">
+                        <div class="carousel-control">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="carousel-control">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="worlds-grid">
+                    <div class="world-card featured">
+                        <div class="card-image" style="background-image: url('assets/images/ancient-ruins.jpg')">
+                            <div class="card-overlay">
+                                <div class="card-category fantasy">Fantasy</div>
+                                <h3 class="card-title">Ancient Ruins</h3>
+                                <div class="card-creator">
+                                    <div class="creator-avatar">D</div>
+                                    <div class="creator-name">DungeonVerse</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <p class="card-description">Explore mysterious dungeons and forgotten temples</p>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-play"></i> 12.4k
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-heart"></i> 845
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clone"></i> 237
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-share"></i> Share
+                            </button>
+                            <button class="action-btn primary">
+                                <i class="fas fa-plus"></i> Use
+                            </button>
+                        </div>
+                    </div>
+                    <div class="world-card featured">
+                        <div class="card-image" style="background-image: url('assets/images/coastal-kingdom.jpg')">
+                            <div class="card-overlay">
+                                <div class="card-category western">Nautical</div>
+                                <h3 class="card-title">Coastal Kingdom</h3>
+                                <div class="card-creator">
+                                    <div class="creator-avatar">D</div>
+                                    <div class="creator-name">DungeonVerse</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <p class="card-description">Adventure through seaside towns and pirate caves</p>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-play"></i> 8.7k
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-heart"></i> 532
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clone"></i> 189
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-share"></i> Share
+                            </button>
+                            <button class="action-btn primary">
+                                <i class="fas fa-plus"></i> Use
+                            </button>
+                        </div>
+                    </div>
+                    <div class="world-card featured">
+                        <div class="card-image" style="background-image: url('assets/images/mountain-pass.jpg')">
+                            <div class="card-overlay">
+                                <div class="card-category high-fantasy">Mountain</div>
+                                <h3 class="card-title">Mountain Pass</h3>
+                                <div class="card-creator">
+                                    <div class="creator-avatar">D</div>
+                                    <div class="creator-name">DungeonVerse</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <p class="card-description">Brave the treacherous peaks and hidden valleys</p>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-play"></i> 6.2k
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-heart"></i> 412
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clone"></i> 156
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-share"></i> Share
+                            </button>
+                            <button class="action-btn primary">
+                                <i class="fas fa-plus"></i> Use
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create New Section -->
+            <section class="create-section">
+                <h2 class="section-title">Create New</h2>
+                <div class="create-buttons">
+                    <button class="create-btn">Create New Campaign</button>
+                    <button class="create-btn secondary">Create New World</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>
