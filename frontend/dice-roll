@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Dice Roll</title>
+    <style>
+        .dice-container {
+            perspective: 1000px;
+            margin: 100px auto;
+            width: 100px;
+            height: 100px;
+        }
+
+        .dice {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+
+        .dice-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #000;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .front  { transform: translateZ(50px); }
+        .back   { transform: rotateY(180deg) translateZ(50px); }
+        .right  { transform: rotateY(90deg) translateZ(50px); }
+        .left   { transform: rotateY(-90deg) translateZ(50px); }
+        .top    { transform: rotateX(90deg) translateZ(50px); }
+        .bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+        .roll-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .roll-button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="dice-container">
+        <div class="dice">
+            <div class="dice-face front">1</div>
+            <div class="dice-face back">6</div>
+            <div class="dice-face right">4</div>
+            <div class="dice-face left">3</div>
+            <div class="dice-face top">5</div>
+            <div class="dice-face bottom">2</div>
+        </div>
+    </div>
+    <button class="roll-button">Roll Dice</button>
+    <div class="result">Result: -</div>
+
+    <script>
+        const dice = document.querySelector('.dice');
+        const rollBtn = document.querySelector('.roll-button');
+        const resultDisplay = document.querySelector('.result');
+
+        // Predefined fixed rotation angles for the dice
+        const DICE_ROTATIONS = {
+            1: { x: 0, y: 0, z: 0 },        // Front (1)
+            6: { x: 0, y: 180, z: 0 },      // Back (6)
+            4: { x: 0, y: 90, z: 0 },       // Right (4)
+            3: { x: 0, y: -90, z: 0 },      // Left (3)
+            5: { x: -90, y: 0, z: 0 },      // Top (5)
+            2: { x: 90, y: 0, z: 0 }        // Bottom (2)
+        };
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function rollDice() {
+            rollBtn.disabled = true;
+            resultDisplay.textContent = 'Rolling dice...';
+            
+            // Initial random spins
+            const initialSpins = {
+                x: getRandomNumber(2, 5) * 360,
+                y: getRandomNumber(2, 5) * 360,
+                z: getRandomNumber(2, 5) * 360
+            };
+            
+            dice.style.transform = `rotateX(${initialSpins.x}deg) rotateY(${initialSpins.y}deg) rotateZ(${initialSpins.z}deg)`;
+            
+            // Random final number
+            const finalNumber = getRandomNumber(1, 6);
+            const finalRotation = DICE_ROTATIONS[finalNumber];
+
+            // Stop at final position after 1 second
+            setTimeout(() => {
+                dice.style.transform = `rotateX(${finalRotation.x}deg) rotateY(${finalRotation.y}deg) rotateZ(${finalRotation.z}deg)`;
+                
+                // Show result after animation ends
+                setTimeout(() => {
+                    resultDisplay.textContent = `Result: ${finalNumber}`;
+                    rollBtn.disabled = false;
+                }, 1000);
+            }, 1000);
+        }
+
+        rollBtn.addEventListener('click', rollDice);
+    </script>
+</body>
+</html>
